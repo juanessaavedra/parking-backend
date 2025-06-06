@@ -98,11 +98,16 @@ La base de datos se crea automáticamente al ejecutar la aplicación.
 - **Method:** `GET`
 - **URL:** `http://localhost:5001/api/spaces/{space_id}`
 
+### 7. **Eliminar Espacio**
+- **Method:** `DELETE`
+- **URL:** `http://localhost:5001/api/spaces/{space_id}`
+- **Response:** 204 (No Content) si se elimina exitosamente
+
 ---
 
 ## 🚗 Gestión de Vehículos
 
-### 7. **Registrar Vehículo**
+### 8. **Registrar Vehículo**
 - **Method:** `POST`
 - **URL:** `http://localhost:5001/api/vehicles`
 - **Headers:** `Content-Type: application/json`
@@ -118,19 +123,24 @@ La base de datos se crea automáticamente al ejecutar la aplicación.
 
 **Tipos de vehículo:** `car`, `motorcycle`, `truck`
 
-### 8. **Obtener Todos los Vehículos**
+### 9. **Obtener Todos los Vehículos**
 - **Method:** `GET`
 - **URL:** `http://localhost:5001/api/vehicles`
 
-### 9. **Buscar Vehículo por Placa**
+### 10. **Buscar Vehículo por Placa**
 - **Method:** `GET`
 - **URL:** `http://localhost:5001/api/vehicles/{license_plate}`
+
+### 11. **Eliminar Vehículo**
+- **Method:** `DELETE`
+- **URL:** `http://localhost:5001/api/vehicles/{vehicle_id}`
+- **Response:** 204 (No Content) si se elimina exitosamente
 
 ---
 
 ## 🚪 Gestión de entradas (Entrada/Salida)
 
-### 10. **Registrar Entrada de Vehículo**
+### 12. **Registrar Entrada de Vehículo**
 - **Method:** `POST`
 - **URL:** `http://localhost:5001/api/sessions/entry`
 - **Headers:** `Content-Type: application/json`
@@ -153,7 +163,7 @@ La base de datos se crea automáticamente al ejecutar la aplicación.
 }
 ```
 
-### 11. **Registrar Salida de Vehículo**
+### 13. **Registrar Salida de Vehículo**
 - **Method:** `POST`
 - **URL:** `http://localhost:5001/api/sessions/exit`
 - **Headers:** `Content-Type: application/json`
@@ -164,17 +174,67 @@ La base de datos se crea automáticamente al ejecutar la aplicación.
 }
 ```
 
-### 12. **Obtener Todas las Sesiones**
+### 14. **Obtener Todas las Sesiones**
 - **Method:** `GET`
 - **URL:** `http://localhost:5001/api/sessions`
 
-### 13. **Obtener Sesiones Activas**
+### 15. **Obtener Sesiones Activas**
 - **Method:** `GET`
 - **URL:** `http://localhost:5001/api/sessions/active`
 
-### 14. **Marcar Sesión como Pagada**
+### 16. **Marcar Sesión como Pagada**
 - **Method:** `POST`
 - **URL:** `http://localhost:5001/api/sessions/{session_id}/pay`
 
 ---
+
+## 🧪 Testing
+
+El proyecto incluye una suite completa de pruebas automatizadas dividida en tres categorías:
+
+```
+
+### Ejecutar Pruebas
+
+#### 1. **Todas las Pruebas**
+```bash
+python -m unittest discover tests -v
+```
+
+#### 2. **Solo Pruebas Unitarias**
+```bash
+python -m unittest tests.test_unit -v
+```
+
+#### 3. **Solo Pruebas de Integración**
+```bash
+python -m unittest tests.test_integration -v
+```
+
+#### 4. **Solo Pruebas End-to-End**
+```bash
+python -m unittest tests.test_e2e -v
+```
+
+#### 5. **Prueba Específica**
+```bash
+python -m unittest tests.test_unit.TestUnitFunctions.test_validate_required_fields -v
+```
+
+### Tipos de Pruebas
+
+#### 🔧 **Pruebas Unitarias** (`test_unit.py`)
+- **Validación de datos:** Prueba la función `validate_required_fields()`
+- **Transformación de datos:** Prueba la función `calculate_hours_difference()`
+- **Función utilitaria:** Prueba la función `generate_parking_receipt_id()`
+
+#### 🔗 **Pruebas de Integración** (`test_integration.py`)
+- **Insertar registro:** Prueba la inserción de espacios de parking en la base de datos
+- **Consultar registros:** Prueba consultas múltiples de vehículos en la base de datos
+- **Eliminar registro:** Prueba la eliminación de sesiones de parking de la base de datos
+
+#### 🌐 **Pruebas End-to-End** (`test_e2e.py`)
+- **GET /api/spaces:** Verifica que retorne lista completa con código 200
+- **POST /api/spaces:** Verifica que cree elemento y retorne 201 con datos
+- **DELETE /api/spaces/:id:** Verifica que elimine y retorne 204, luego GET retorne 404
 
